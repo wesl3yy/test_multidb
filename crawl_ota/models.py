@@ -8,6 +8,10 @@ class Hotel(models.Model):
     address = models.CharField(max_length=200)
     phone = models.CharField(max_length=50)
 
+    class Meta:
+        db_table = 'hotel'
+        managed = True
+
 
 class Room(models.Model):
     VIP = 1
@@ -20,3 +24,6 @@ class Room(models.Model):
     room_number = models.IntegerField()
     type = models.IntegerField(choices=ROOM_CHOICES)
 
+    class Meta:
+        db_table = 'room'
+        managed = True
