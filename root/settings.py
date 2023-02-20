@@ -10,7 +10,11 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 import os
+import environ
 from pathlib import Path
+
+env = environ.Env()
+environ.Env.read_env()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -37,7 +41,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'rest_framework'
+    'rest_framework',
+    'crawl_ota.apps.CrawlOtaConfig',
+    'marketing.apps.MarketingConfig',
 ]
 
 MIDDLEWARE = [
@@ -77,13 +83,33 @@ WSGI_APPLICATION = 'root.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.environ.get('POSTGRES_NAME'),
-        'USER': os.environ.get('POSTGRES_USER'),
-        'PASSWORD': os.environ.get('POSTGRES_PASSWORD'),
-        'HOST': 'db',
+        'NAME': 'postgres',
+        'USER': env('DB_USERNAME'),
+        'PASSWORD': env('DB_PASSWORD'),
+        'HOST': env('DB_HOST', default='db'),
+        'PORT': 5432,
+    },
+    'crawl_ota': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'test_multidb1',
+        'USER': env('DB_USERNAME'),
+        'PASSWORD': env('DB_PASSWORD'),
+        'HOST': env('DB_HOST', default='db'),
+        'PORT': 5432,
+    },
+    'marketing': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'test_multidb2',
+        'USER': env('DB_USERNAME'),
+        'PASSWORD': env('DB_PASSWORD'),
+        'HOST': env('DB_HOST', default='db'),
         'PORT': 5432,
     }
 }
+DATABASE_ROUTERS = [
+    'crawl_ota.dbrouters.CrawlOtaRouter',
+    'marketing.dbrouters.MarketingRouter'
+]
 
 
 # Password validation
