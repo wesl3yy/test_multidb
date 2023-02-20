@@ -6,7 +6,7 @@ class CrawlOtaRouter:
         Attempts to read auth and contenttypes models go to auth_db.
         """
         if model._meta.app_label in self.route_app_labels:
-            return 'test_multidb1'
+            return 'crawl_ota'
         return None
 
     def allow_relation(self, obj1, obj2, **hints):
@@ -27,5 +27,5 @@ class CrawlOtaRouter:
         'auth_db' database.
         """
         if app_label in self.route_app_labels:
-            return db == 'test_multidb1'
+            return db == 'crawl_ota'
         return None

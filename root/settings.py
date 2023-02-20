@@ -91,7 +91,7 @@ DATABASES = {
     },
     'crawl_ota': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'test_multidb1',
+        'NAME': 'crawl_ota',
         'USER': env('DB_USERNAME'),
         'PASSWORD': env('DB_PASSWORD'),
         'HOST': env('DB_HOST', default='db'),
@@ -99,7 +99,7 @@ DATABASES = {
     },
     'marketing': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'test_multidb2',
+        'NAME': 'marketing',
         'USER': env('DB_USERNAME'),
         'PASSWORD': env('DB_PASSWORD'),
         'HOST': env('DB_HOST', default='db'),
